@@ -7,8 +7,10 @@ import com.cesar.knot_sdk.KNoTAMQPFactory
 import com.cesar.knot_sdk.KNoTMessager
 import com.cesar.knot_sdk.knot_messages.KNoTMessageRegister
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUnregister
+import com.cesar.knot_sdk.knot_messages.KNoTMessageAuth
 import kotlinx.android.synthetic.main.activity_main.register_button
 import kotlinx.android.synthetic.main.activity_main.unregister_button
+import kotlinx.android.synthetic.main.activity_main.authenticate_button
 import org.jetbrains.anko.doAsync
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     val PASSWORD = "pass"
     val THING_ID = "a74151d19de59cd3"
     val THING_NAME = "thing-name"
+    val THING_TOKEN = "ejfhwekhrui234huirh23uf"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         KNoTAMQPFactory().create(knotAMQP)
         val knotThingRegister = KNoTMessageRegister(THING_ID, THING_NAME)
         val knotThingUnregister = KNoTMessageUnregister(THING_ID)
+        val knotThingAuth = KNoTMessageAuth(THING_ID, THING_TOKEN)
 
         register_button.setOnClickListener {
             doAsync { knotMessager.register(knotThingRegister) }
@@ -35,5 +39,10 @@ class MainActivity : AppCompatActivity() {
         unregister_button.setOnClickListener {
             doAsync { knotMessager.unregister(knotThingUnregister) }
         }
+
+        authenticate_button.setOnClickListener {
+            doAsync { knotMessager.authenticate(knotThingAuth) }
+        }
+
     }
 }

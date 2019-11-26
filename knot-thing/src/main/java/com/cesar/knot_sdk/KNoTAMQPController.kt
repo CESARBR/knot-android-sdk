@@ -2,6 +2,7 @@ package com.cesar.knot_sdk
 
 import com.cesar.knot_sdk.knot_messages.KNoTMessageRegister
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUnregister
+import com.cesar.knot_sdk.knot_messages.KNoTMessageAuth
 import com.google.gson.Gson
 
 /**
@@ -22,6 +23,14 @@ class KNoTAMQPController(val knotAMQP: KNoTAMQP) : KNoTMessager {
             Gson().toJson(knotThingUnregister),
             knotAMQP.EXCHANGE_NAME_CLOUD,
             knotAMQP.BINDING_KEY_UNREGISTER
+        )
+    }
+
+    override fun authenticate(knotMessageAuth: KNoTMessageAuth) {
+        knotAMQP.publish(
+            Gson().toJson(knotMessageAuth),
+            knotAMQP.EXCHANGE_NAME_CLOUD,
+            knotAMQP.BINDING_KEY_AUTHENTICATE
         )
     }
 
