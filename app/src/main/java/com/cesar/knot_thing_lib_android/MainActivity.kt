@@ -8,9 +8,15 @@ import com.cesar.knot_sdk.KNoTMessager
 import com.cesar.knot_sdk.knot_messages.KNoTMessageRegister
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUnregister
 import com.cesar.knot_sdk.knot_messages.KNoTMessageAuth
+import com.cesar.knot_sdk.KNoTTypes.KNOT_TYPE_ID_SWITCH
+import com.cesar.knot_sdk.KNoTTypes.KNOT_UNIT_NOT_APPLICABLE
+import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_BOOL
+import com.cesar.knot_sdk.knot_data.KNoTSchema
+import com.cesar.knot_sdk.knot_messages.KNoTMessageUpdateSchema
 import kotlinx.android.synthetic.main.activity_main.register_button
 import kotlinx.android.synthetic.main.activity_main.unregister_button
 import kotlinx.android.synthetic.main.activity_main.authenticate_button
+import kotlinx.android.synthetic.main.activity_main.schema_update_button
 import org.jetbrains.anko.doAsync
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     val THING_ID = "a74151d19de59cd3"
     val THING_NAME = "thing-name"
     val THING_TOKEN = "ejfhwekhrui234huirh23uf"
+    val SENSOR_ID = 1
+    val SENSOR_NAME = "updateSchemaTest"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +39,17 @@ class MainActivity : AppCompatActivity() {
         val knotThingRegister = KNoTMessageRegister(THING_ID, THING_NAME)
         val knotThingUnregister = KNoTMessageUnregister(THING_ID)
         val knotThingAuth = KNoTMessageAuth(THING_ID, THING_TOKEN)
+        val knotThingSchema = mutableListOf(
+            KNoTSchema(
+                SENSOR_ID,
+                KNOT_VALUE_TYPE_BOOL,
+                KNOT_UNIT_NOT_APPLICABLE,
+                KNOT_TYPE_ID_SWITCH,
+                SENSOR_NAME
+            )
+        )
+
+        val kNoTThingUpdateSchema = KNoTMessageUpdateSchema(THING_ID, knotThingSchema)
 
         register_button.setOnClickListener {
             doAsync { knotMessager.register(knotThingRegister) }
@@ -42,6 +61,10 @@ class MainActivity : AppCompatActivity() {
 
         authenticate_button.setOnClickListener {
             doAsync { knotMessager.authenticate(knotThingAuth) }
+        }
+
+        schema_update_button.setOnClickListener {
+            doAsync { knotMessager.updateSchema(kNoTThingUpdateSchema) }
         }
 
     }
