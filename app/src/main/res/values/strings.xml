@@ -4,4 +4,5 @@
     <string name="unregister_label">send-unregister-message</string>
     <string name="auth_label">send-auth-message</string>
     <string name="schema_update_label">send-schema-update-message</string>
+    <string name="publish_label">send-data-message</string>
 </resources>

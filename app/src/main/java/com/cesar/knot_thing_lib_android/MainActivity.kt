@@ -13,10 +13,13 @@ import com.cesar.knot_sdk.KNoTTypes.KNOT_UNIT_NOT_APPLICABLE
 import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_BOOL
 import com.cesar.knot_sdk.knot_data.KNoTSchema
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUpdateSchema
+import com.cesar.knot_sdk.knot_messages.KNoTMessageDataItem
+import com.cesar.knot_sdk.knot_messages.KNoTMessageUpdateData
 import kotlinx.android.synthetic.main.activity_main.register_button
 import kotlinx.android.synthetic.main.activity_main.unregister_button
 import kotlinx.android.synthetic.main.activity_main.authenticate_button
 import kotlinx.android.synthetic.main.activity_main.schema_update_button
+import kotlinx.android.synthetic.main.activity_main.data_publish_button
 import org.jetbrains.anko.doAsync
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +52,18 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val kNoTThingUpdateSchema = KNoTMessageUpdateSchema(THING_ID, knotThingSchema)
+        val knotThingUpdateSchema = KNoTMessageUpdateSchema(THING_ID, knotThingSchema)
+
+
+        val dataItem = object {
+            val sensorId : Int = SENSOR_ID
+            var value : Boolean = true
+        }
+
+        val knotData = mutableListOf(
+            KNoTMessageDataItem(dataItem)
+        )
+        val knotThingUpdateData = KNoTMessageUpdateData(THING_ID, knotData)
 
         register_button.setOnClickListener {
             doAsync { knotMessager.register(knotThingRegister) }
@@ -64,7 +78,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         schema_update_button.setOnClickListener {
-            doAsync { knotMessager.updateSchema(kNoTThingUpdateSchema) }
+            doAsync { knotMessager.updateSchema(knotThingUpdateSchema) }
+        }
+
+        data_publish_button.setOnClickListener {
+            doAsync { knotMessager.publishData(knotThingUpdateData) }
         }
 
     }

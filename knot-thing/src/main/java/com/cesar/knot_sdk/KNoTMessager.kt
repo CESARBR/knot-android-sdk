@@ -4,6 +4,7 @@ import com.cesar.knot_sdk.knot_messages.KNoTMessageRegister
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUnregister
 import com.cesar.knot_sdk.knot_messages.KNoTMessageAuth
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUpdateSchema
+import com.cesar.knot_sdk.knot_messages.KNoTMessageUpdateData
 
 /**
  * This interface represents all operations that are available with the KNoT
@@ -32,5 +33,10 @@ interface KNoTMessager {
      * Updates the schema for a KNoT Thing in the cloud.
      */
     fun updateSchema(knotMessageSchema: KNoTMessageUpdateSchema)
+
+    /**
+     * Publishes data from a KNoT Thing in the cloud.
+     */
+    fun publishData(knotMessageUpdateData: KNoTMessageUpdateData)
 
 }
