@@ -10,4 +10,11 @@
         android:text="@string/register_label"
         android:layout_gravity="center" />
 
+    <Button
+        android:id="@+id/unregister_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unregister_label"
+        android:layout_gravity="center" />
+
 </LinearLayout>

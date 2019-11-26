@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">knot-thing-lib-android</string>
     <string name="register_label">send-register-message</string>
+    <string name="unregister_label">send-unregister-message</string>
 </resources>

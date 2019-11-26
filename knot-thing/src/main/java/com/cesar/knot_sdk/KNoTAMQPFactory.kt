@@ -29,6 +29,12 @@ class KNoTAMQPFactory {
                 knotAMQP.EXCHANGE_NAME_CLOUD,
                 knotAMQP.BINDING_KEY_REGISTER
             )
+
+            knotAMQP.bindQueue(
+                knotAMQP.QUEUE_NAME_FOG_IN,
+                knotAMQP.EXCHANGE_NAME_CLOUD,
+                knotAMQP.BINDING_KEY_UNREGISTER
+            )
         }
     }
 }

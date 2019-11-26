@@ -6,7 +6,9 @@ import com.cesar.knot_sdk.KNoTAMQP
 import com.cesar.knot_sdk.KNoTAMQPFactory
 import com.cesar.knot_sdk.KNoTMessager
 import com.cesar.knot_sdk.knot_messages.KNoTMessageRegister
+import com.cesar.knot_sdk.knot_messages.KNoTMessageUnregister
 import kotlinx.android.synthetic.main.activity_main.register_button
+import kotlinx.android.synthetic.main.activity_main.unregister_button
 import org.jetbrains.anko.doAsync
 
 class MainActivity : AppCompatActivity() {
@@ -24,9 +26,14 @@ class MainActivity : AppCompatActivity() {
         lateinit var knotMessager : KNoTMessager
         KNoTAMQPFactory().create(knotAMQP)
         val knotThingRegister = KNoTMessageRegister(THING_ID, THING_NAME)
+        val knotThingUnregister = KNoTMessageUnregister(THING_ID)
 
         register_button.setOnClickListener {
             doAsync { knotMessager.register(knotThingRegister) }
+        }
+
+        unregister_button.setOnClickListener {
+            doAsync { knotMessager.unregister(knotThingUnregister) }
         }
     }
 }
