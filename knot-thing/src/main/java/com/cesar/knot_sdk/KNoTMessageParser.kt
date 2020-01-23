@@ -6,6 +6,7 @@ import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_FLOAT
 import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_INT
 import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_MAX
 import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_RAW
+import com.cesar.knot_sdk.knot_messages.KNoTMessageAuthenticated
 import com.cesar.knot_sdk.knot_messages.KNoTMessageDataItem
 import com.cesar.knot_sdk.knot_messages.KNoTMessageRequestData
 import com.cesar.knot_sdk.knot_messages.KNoTMessageSchemaResp
@@ -100,5 +101,13 @@ class KNoTMessageParser {
         val error = receivedJson.get(ERROR).toString()
 
         return KNoTMessageSchemaResp(id, error)
+    }
+
+    fun parseAuthStatus(knotAuth : String) : KNoTMessageAuthenticated {
+        val receivedJson = JsonParser.parseString(knotAuth).asJsonObject
+        val id = receivedJson.get(ID).asString
+        val error = receivedJson.get(ERROR).toString()
+
+        return KNoTMessageAuthenticated(id, error)
     }
 }
