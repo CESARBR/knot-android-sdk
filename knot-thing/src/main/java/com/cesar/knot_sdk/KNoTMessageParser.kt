@@ -8,6 +8,7 @@ import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_MAX
 import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_RAW
 import com.cesar.knot_sdk.knot_messages.KNoTMessageAuthenticated
 import com.cesar.knot_sdk.knot_messages.KNoTMessageDataItem
+import com.cesar.knot_sdk.knot_messages.KNoTMessageRegistered
 import com.cesar.knot_sdk.knot_messages.KNoTMessageRequestData
 import com.cesar.knot_sdk.knot_messages.KNoTMessageSchemaResp
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUpdateData
@@ -109,5 +110,14 @@ class KNoTMessageParser {
         val error = receivedJson.get(ERROR).toString()
 
         return KNoTMessageAuthenticated(id, error)
+    }
+
+    fun parseDeviceRegistered(knotRegister : String) : KNoTMessageRegistered {
+        val receivedJson = JsonParser.parseString(knotRegister).asJsonObject
+        val id = receivedJson.get(ID).asString
+        val token = receivedJson.get(TOKEN).toString()
+        val error = receivedJson.get(ERROR).toString()
+
+        return KNoTMessageRegistered(id, token, error)
     }
 }
