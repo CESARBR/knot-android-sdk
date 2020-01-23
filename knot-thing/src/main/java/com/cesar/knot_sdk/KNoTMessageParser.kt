@@ -7,6 +7,7 @@ import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_INT
 import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_MAX
 import com.cesar.knot_sdk.KNoTTypes.KNOT_VALUE_TYPE_RAW
 import com.cesar.knot_sdk.knot_messages.KNoTMessageDataItem
+import com.cesar.knot_sdk.knot_messages.KNoTMessageRequestData
 import com.cesar.knot_sdk.knot_messages.KNoTMessageUpdateData
 import com.google.gson.JsonParser
 
@@ -20,6 +21,9 @@ class KNoTMessageParser {
     private val DATA = "data"
     private val ID = "id"
     private val SENSOR_ID = "sensorId"
+    private val SENSOR_IDS = "sensorIds"
+    private val TOKEN = "token"
+    private val ERROR = "error"
     private val ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE =
             "The KNoTMessageParser is only prepared to handle " +
             "KNOT_VALUE_TYPE_INT, KNOT_VALUE_TYPE_FLOAT, " +
@@ -74,5 +78,18 @@ class KNoTMessageParser {
         }
 
         return KNoTMessageUpdateData(id, data)
+    }
+
+    fun parseDataRequest(knotData : String) : KNoTMessageRequestData {
+        val receivedJsonObject = JsonParser.parseString(knotData).asJsonObject
+        val id = receivedJsonObject.get(ID).asString
+        val sensorIdsJsonArray = receivedJsonObject.getAsJsonArray(SENSOR_IDS)
+        val sensorIds = mutableListOf<Int>()
+
+        sensorIdsJsonArray?.forEach {
+            sensorIds.add(it.asInt)
+        }
+
+        return KNoTMessageRequestData(id, sensorIds)
     }
 }
