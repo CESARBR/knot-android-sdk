@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val knotData = mutableListOf(
-            KNoTMessageDataItem(dataItem)
+            KNoTMessageDataItem(dataItem.sensorId, dataItem.value)
         )
         val knotThingUpdateData = KNoTMessageUpdateData(THING_ID, knotData)
 

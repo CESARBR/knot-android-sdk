@@ -6,5 +6,6 @@ package com.cesar.knot_sdk.knot_messages
  * @property data the data batch that is to be sent
  */
 data class KNoTMessageDataItem(
+    val sensorId : Int,
     val value : Any
 )
